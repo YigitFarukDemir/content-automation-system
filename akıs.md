@@ -1,7 +1,3 @@
-# 🔎 HackerNews Summary App
-
-Bu proje, **Hacker News** üzerindeki popüler haberleri toplayıp, yapay zeka ile özetleyip çok dilli olarak sunan bir sistemdir. Mobil (Flutter) ve Python tabanlı backend'den oluşur.
-
 ## 🧩 Bileşenler
 
 ### 1. Python Backend (Algolia + Gemini API)
