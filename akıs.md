@@ -1,32 +1,39 @@
-1. Python backend (Algolia ile):
-   🔹 10 popüler HackerNews hikayesini çeker
-   🔹 Firestore'a yazar (summaryStatus: "pending")
+# 🔎 HackerNews Summary App
 
-2. Flutter app:
-   🔹 Firestore'daki hikayeleri çeker
-   🔹 Kullanıcı birini seçerse -> summaryStatus: "queued"
+Bu proje, **Hacker News** üzerindeki popüler haberleri toplayıp, yapay zeka ile özetleyip çok dilli olarak sunan bir sistemdir. Mobil (Flutter) ve Python tabanlı backend'den oluşur.
 
-3. Python backend:
-   🔹 summaryStatus == "queued" hikayeleri Gemini ile özetler + Türkçe çevirir
-   🔹 summary ve translatedSummary alanlarına yazar
-   🔹 summaryStatus: "done"
+## 🧩 Bileşenler
 
-4. Flutter app:
-   🔹 summaryStatus: "done" olanları gösterir
-   🔹 (İsteğe bağlı: paylaşım butonu vs.)
+### 1. Python Backend (Algolia + Gemini API)
+- ✅ Hacker News üzerinden Algolia API ile 10 popüler hikaye çekilir.
+- ✅ Her hikaye `summaryStatus: "pending"` olarak **Firestore**'a kaydedilir.
+- ✅ `summaryStatus: "queued"` olan hikayeler Google Gemini API ile özetlenir.
+- ✅ Özetler Türkçeye çevrilir ve `summaryStatus: "done"` olarak güncellenir.
 
-PLANLANAN FIRESTORE YAPISI
-    stories (collection)
-    ├── story_id_1 (document)
-    │   ├── title: "LLMs are eating the world"
-    │   ├── url: "https://someurl.com"
-    │   ├── author: "johnDoe"
-    │   ├── points: 300
-    │   ├── createdAt: timestamp (Algolia'dan gelen ISO date parse edilecek)
-    │   ├── summaryStatus: "pending" | "queued" | "done"
-    │   ├── summary: null or string
-    │   ├── translatedSummary: null or string
+### 2. Flutter Mobil Uygulama
+- ✅ Firestore'dan haber listesi çekilir.
+- ✅ Kullanıcı bir haberi seçtiğinde, ilgili belgenin `summaryStatus` alanı `"queued"` yapılır.
+- ✅ Özetleme tamamlandıysa kullanıcıya `summary` ve `translatedSummary` gösterilir.
+- ✅ (Opsiyonel) Paylaşım butonları, dil seçimi, akıllı saat uyumluluğu.
 
-PLANLANAN EKLENTİLER
+---
+
+## 🗃️ Firestore Veri Yapısı
+
+```json
+stories (collection)
+├── story_id (document)
+    ├── title: "LLMs are eating the world"
+    ├── url: "https://someurl.com"
+    ├── author: "johnDoe"
+    ├── points: 300
+    ├── createdAt: timestamp  // ISO 8601'den parse edilir
+    ├── summaryStatus: "pending" | "queued" | "done"
+    ├── summary: null or string
+    ├── translatedSummary: null or string (örneğin Türkçe)
+
+
+## Eklenecekler
+-PLANLANAN EKLENTİLER
     -DİL SEÇİMİ
     -AKILLI SAAT ENTEGRASYONU
